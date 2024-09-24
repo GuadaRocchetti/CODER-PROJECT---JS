@@ -1,5 +1,5 @@
 // Registrar datos del cliente
-let clientes = [];
+let clientes= JSON.parse(localStorage.getItem('clientes'));
 function ingresarDatosCliente () {
 let continuar = true;
 while (continuar){
@@ -86,3 +86,37 @@ default:
 const PrecioFinal= precioPorMetroCuadrado * metrosCuadrados;
 }
 
+function mostrarClientes(){
+    const listaClientes= document.getElementById('listaClientes');
+    listaClientes.innerHTML = '';
+    clientes.forEach((cliente,index) => {
+        const li = document.createElement('li');
+        li.textContent = '${cliente.nombre}, ${cliente.apellido}, Obra: ${cliente.nombreObra}, Ubicación: ${cliente.ubicaciónObra}';
+        listaClientes.appendChild(li);
+    });
+}
+
+document.getElementById('guardarCliente').addEventListener('click', function(){
+ const nombre= document.getElementById ('nombre').value;
+ const apellido= document.getElementById('apellido').value;
+ const celular= document.getElementById('celular').value;
+ const email= document.getElementById ('email').value;
+ const nombreObra= document.getElementById ('nombreObra').value;
+ const ubicaciónObra= document.getElementById ('ubicaciónObra').value;
+})
+
+if (nombre && apellido && celular && email && nombreObra && ubicaciónObra){
+    const nuevoCliente = {
+        nombre,
+        apellido,
+        celular,
+        email,
+        nombreObra,
+        ubicaciónObra,
+    }
+}
+
+clientes.push (nuevoCliente);
+localStorage.setItem('clientes', JSON.stringify(clientes));
+
+mostrarClientes();
